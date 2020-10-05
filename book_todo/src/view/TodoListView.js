@@ -13,7 +13,9 @@ class TodoListView extends PureComponent {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Title</Table.HeaderCell>
-            <Table.HeaderCell>Date</Table.HeaderCell>
+            <Table.HeaderCell>Contents</Table.HeaderCell>
+            <Table.HeaderCell>Start Date</Table.HeaderCell>
+            <Table.HeaderCell>End Date</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -21,10 +23,17 @@ class TodoListView extends PureComponent {
           {Array.isArray(todos) && todos.length ? (
             todos.map((todo) => {
               return (
-                <Table.Row key={todo.id} onClick={() => onSelectTodo(todo.id)}>
+                <Table.Row
+                  key={todo.todoNum}
+                  onClick={() => onSelectTodo(todo.todoNum)}
+                >
                   <Table.Cell>{todo.title}</Table.Cell>
+                  <Table.Cell>{todo.contents}</Table.Cell>
                   <Table.Cell>
-                    {moment(todo.date).format("YYYY-MM-DD HH:mm")}
+                    {moment(todo.startDate).format("YYYY-MM-DD HH:mm")}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {moment(todo.endDate).format("YYYY-MM-DD HH:mm")}
                   </Table.Cell>
                 </Table.Row>
               );

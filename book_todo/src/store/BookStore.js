@@ -4,9 +4,7 @@ import BookApi from "../api/BookApi";
 // import Books from '../Books';
 
 class BookStore {
-  constructor() {
-    this.bookApi = new BookApi();
-  }
+  bookApi = new BookApi();
 
   @observable books = [];
   @observable book = null;
@@ -17,27 +15,46 @@ class BookStore {
   }
 
   @computed get _books() {
+    console.log(this.books);
     return this.books ? this.books.slice() : [];
   }
 
   @computed get getErrorMessage() {
-    return this.errorMessage ? "true" : "false";
+    return this.errorMessage ? this.errorMessage : "fail";
   }
 
   @action select = (book) => {
-    this.bookDetail(book.ISBN);
+    this.findByBook(book.ISBN);
   };
 
   @action
   async bookList() {
-    this.books = await this.bookApi.bookList();
+    // this.books = await this.bookApi.bookList();
     // let jsonResult = this.bookApi.bookList();
     // console.log(jsonResult);
+
+    let result = await this.bookApi.bookList();
+    // let jsonResult = this.bookApi.bookList();
+    // console.log(jsonResult);
+
+    //파싱 형태를 맞추기위해 result가 잘 파
+    //result -> jSON 객체로 정규화 -> Books 객체로 파싱
+    if (result instanceof Array) {
+      this.books = JSON.parse(JSON.stringify(result));
+    } else if (result) {
+      this.errorMessage = result("message");
+    }
   }
 
   @action
   async bookDetail(ISBN) {
     this.book = await this.bookApi.bookDetail(ISBN);
+  }
+
+  @action
+  async findByBook(ISBN) {
+    this.book = await this.bookApi.bookDetail(ISBN);
+    console.log(this.book);
   }
 
   @action

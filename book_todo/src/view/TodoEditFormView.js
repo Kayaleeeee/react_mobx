@@ -29,15 +29,35 @@ class TodoEditFormView extends PureComponent {
             value={todo && todo.title ? todo.title : ""}
             onChange={(e) => onSetTodoProp("title", e.target.value)}
           />
+          <Form.Input
+            fluid
+            label="Contents"
+            placeholder="Contents"
+            value={todo && todo.contents ? todo.contents : ""}
+            onChange={(e) => onSetTodoProp("contents", e.target.value)}
+          />
           <Form.Field>
-            <label>Date</label>
+            <label>Start Date</label>
             <DatePicker
               showTimeSelect
-              selected={todo && todo.date ? todo.date : null}
+              selected={
+                todo && todo.startDate ? new Date(todo.startDate) : null
+              }
               dateFormat="yyyy-MM-dd hh:mm"
               timeFormat="hh:mm"
               timeIntervals={15}
-              onChange={(date) => onSetTodoProp("date", date.valueOf())}
+              onChange={(date) => onSetTodoProp("startDate", date.valueOf())}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>End Date</label>
+            <DatePicker
+              showTimeSelect
+              selected={todo && todo.endDate ? new Date(todo.endDate) : null}
+              dateFormat="yyyy-MM-dd hh:mm"
+              timeFormat="hh:mm"
+              timeIntervals={15}
+              onChange={(date) => onSetTodoProp("endDate", date.valueOf())}
             />
           </Form.Field>
         </Form.Group>

@@ -10,7 +10,7 @@ import TodoStore from "./store/TodoStore";
 import BookStore from "./store/BookStore";
 
 ReactDOM.render(
-  <Provider TodoStore={TodoStore} bookStore={BookStore}>
+  <Provider todoStore={TodoStore} bookStore={BookStore}>
     <App />
   </Provider>,
   document.getElementById("root")
