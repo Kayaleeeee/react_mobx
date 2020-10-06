@@ -1,51 +1,49 @@
 import axios from "axios";
 
 class BookApi {
-  URL = "/api/books/";
+  URL = "/api/books/"; //http://localhost:9000/api/books
 
   bookList() {
     return axios
       .get(this.URL)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => console.log(error));
+      .then((response) => (response && response.data) || null);
   }
 
-  //   bookDetail(ISBN) {}
-  bookDetail(ISBN) {
+  // bookDetail(ISBN) : URL/ISBN Get  : Book
+  bookDetail(isbn) {
     return axios
-      .get(this.URL + `${ISBN}`)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => console.log(error));
+      .get(this.URL + `${isbn}/`)
+      .then((response) => (response && response.data) || null);
   }
 
-  //   bookCreate(BookApiModel) {}
+  // bookCreate(BookApiModel) : URL  POST
   bookCreate(bookApiModel) {
+    let bookJson = JSON.stringify(bookApiModel);
     return axios
-      .post(this.URL, bookApiModel)
+      .post(this.URL, bookJson)
       .then((response) => (response && response.data) || null);
+    //reoponse!=null && response.data != null ?response.data : null
   }
 
+  // bookModify(BookApiModel) : URL PUT
   bookModify(bookApiModel) {
+    let bookJson = JSON.stringify(bookApiModel);
     return axios
-      .put(this.URL, bookApiModel)
+      .put(this.URL, bookJson)
       .then((response) => (response && response.data) || null);
   }
 
-  //   bookDelete(ISBN) {}
-  bookDelete(ISBN) {
+  // bookDelete(ISBN) : URL/ISBN Delete
+  bookDelete(isbn) {
     return axios
-      .delete(this.URL + `${ISBN}`)
+      .delete(this.URL + `${isbn}/`)
       .then((response) => (response && response.data) || null);
   }
 
-  //   search(searchType, keyword) {}
+  // search(searchType, keyword): URL/searchType/keyword Get :Book[]
   search(searchType, keyword) {
     return axios
-      .get(this.URL + `${searchType}/${keyword}`)
+      .get(this.URL + `${searchType}/${keyword}/`)
       .then((response) => (response && response.data) || null);
   }
 }

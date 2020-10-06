@@ -4,7 +4,8 @@ import { Card, Image } from "semantic-ui-react";
 class BookDetailsView extends Component {
   render() {
     const { book } = this.props;
-    console.log({ book });
+    console.log(book);
+    console.log(book.title);
 
     return (
       <Card>

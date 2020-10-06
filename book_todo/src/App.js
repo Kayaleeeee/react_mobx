@@ -4,49 +4,45 @@ import BookMain from "./view/menu/BookMain";
 import TodoMain from "./view/menu/TodoMain";
 import { observer } from "mobx-react";
 import { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Home from "./view/menu/Home";
 
-@observer
 class App extends Component {
-  state = { activeItem: "home" };
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
   render() {
-    const activeItem = this.state.activeItem;
     return (
-      <div>
-        <Menu pointing secondary>
-          <Menu.Item
-            name="home"
-            active={activeItem === "home"}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="book"
-            active={activeItem === "book"}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="todo"
-            active={activeItem === "todo"}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Menu position="right">
-            <Menu.Item
-              name="login"
-              active={activeItem === "login"}
-              onClick={this.handleItemClick}
-            />
-          </Menu.Menu>
-        </Menu>
+      <Router>
+        <ul
+          style={{
+            width: "300px",
+            display: "inline-flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            textDecoration: "none",
+            listStyle: "none",
+            fontSize: "20px",
+            color: "black",
+            // paddingBottom: "50px",
+          }}
+        >
+          <li>
+            <Link to="/">HOME</Link>
+          </li>
+          <li>
+            <Link to="/books">BOOKS</Link>
+          </li>
+          <li>
+            <Link to="/todos">TODOS</Link>
+          </li>
+        </ul>
 
-        <Segment>
-            {activeItem === "home" && <h1>WELLCOME!</h1>}
-            {activeItem === "book" && <BookMain/>}
-            {activeItem === "todo" && <TodoMain/>}
-            {activeItem === "login" && <h1>로그인</h1>}        
-        </Segment>
-      </div>
+        <hr></hr>
+        <br></br>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/books" component={BookMain} />
+          <Route path="/todos" component={TodoMain} />
+        </Switch>
+      </Router>
     );
   }
 }

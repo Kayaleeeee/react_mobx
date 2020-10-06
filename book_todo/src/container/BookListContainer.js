@@ -9,19 +9,19 @@ class BookListContainer extends Component {
   //component에서 view를 다 로드하고 나면,
   componentDidMount() {
     const { bookStore } = this.props;
-    // if (bookStore) {
-    bookStore.bookList();
-    //}
+    if (bookStore) {
+      bookStore.bookList();
+    }
   }
 
   onSelect = (book) => {
+    console.log(`BookListContainer : ${book.ISBN}`);
     const { bookStore } = this.props;
     bookStore.select(book);
   };
 
   render() {
     const { bookStore } = this.props;
-
     return <BookListView books={bookStore._books} onSelect={this.onSelect} />;
   }
 }

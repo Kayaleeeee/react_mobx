@@ -11,6 +11,7 @@ class BookStore {
   @observable errorMessage = "";
 
   @computed get _book() {
+    console.log(this.book);
     return this.book ? { ...this.book } : {};
   }
 
@@ -24,6 +25,7 @@ class BookStore {
   }
 
   @action select = (book) => {
+    console.log("BookStore book :" + book);
     this.findByBook(book.ISBN);
   };
 
@@ -46,13 +48,14 @@ class BookStore {
     }
   }
 
-  @action
-  async bookDetail(ISBN) {
-    this.book = await this.bookApi.bookDetail(ISBN);
-  }
+  // @action
+  // async bookDetail(ISBN) {
+  //   this.book = await this.bookApi.bookDetail(ISBN);
+  // }
 
   @action
   async findByBook(ISBN) {
+    console.log(`ISBN : ${ISBN}`);
     this.book = await this.bookApi.bookDetail(ISBN);
     console.log(this.book);
   }
